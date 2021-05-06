@@ -8,10 +8,11 @@ public class Solveur {
     private ArrayList<Noeud> liste_noeuds_ouverts;
     private ArrayList<Noeud> liste_noeuds_fermes;
 
-    public static void main(String[] args){
-        Solveur s= new Solveur();
+    public static void main(String[] args) throws IOException{
+        Solveur s = new Solveur();
+        Grille grille = s.chargerFichier("C:\\Users\\PC\\Desktop\\IA\\tp2\\algorithme-A-star\\src\\puzzles\\puzzle04.txt");
+        System.out.println(grille);
 
-        Grille grille = s.chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzles04.txt");
 
     }
 
@@ -27,6 +28,7 @@ public class Solveur {
         int taille;
         int compteur=0;
         int grille_tableau[][];
+
         line = in.readLine();
         taille =(int)line.charAt(0)-48;
         grille_tableau = new int[taille][taille];
