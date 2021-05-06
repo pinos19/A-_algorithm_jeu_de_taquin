@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class App {
     public static void main(String[] args) throws Exception {
         int [][] grille = new int[3][3];
@@ -21,8 +23,12 @@ public class App {
         }*/
 
         Grille g1 = new Grille(grille);
-        Grille g2 = new Grille(grille);
-
+        Noeud noeud = new Noeud(g1,null,0);
+        System.out.println(noeud.getGrille().toString());
+        ArrayList<Noeud> liste_successeurs = noeud.successeurs();
+        for(int i=0;i<liste_successeurs.size();i++){
+            System.out.println(liste_successeurs.get(i).getGrille().toString());
+        }
 
        
 
