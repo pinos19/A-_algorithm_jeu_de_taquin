@@ -22,9 +22,9 @@ public class App {
 
         Grille g1 = new Grille(grille);
         Grille g2 = new Grille(grille);
-        System.out.println(g1);
-        System.out.println(g1.equals(g2));
 
+
+       
 
 
     }
