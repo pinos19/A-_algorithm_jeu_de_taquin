@@ -18,18 +18,22 @@ public class Solveur {
         Grille grille4 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle07.txt");
         Grille grille5 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle44.txt"); 
 
+        // grille3 == grille4
+
         s.addNoeudListeFermes(new Noeud(grille1,null,0));
         s.addNoeudListeFermes(new Noeud(grille2,null,0));
         s.addNoeudListeFermes(new Noeud(grille3,null,0));
         
         ArrayList<Noeud> liste_test = new ArrayList<Noeud>();
         liste_test.add(new Noeud(grille3,null,0));
-        liste_test.add(new Noeud(grille4,null,0));
         liste_test.add(new Noeud(grille5,null,0));
+        liste_test.add(new Noeud(grille4,null,0));
+        System.out.println("Avant :\n");
         for(int i=0;i<liste_test.size();i++){
             System.out.println(liste_test.get(i).getGrille());
         }
         triSuccesseurs(liste_test,s.getListeFermes());
+        System.out.println("Après :\n");
         for(int i=0;i<liste_test.size();i++){
             System.out.println(liste_test.get(i).getGrille());
         }
@@ -114,7 +118,8 @@ public class Solveur {
         Grille grille_successeur;
         Grille grille_fermes;
         int i,j,decrement=0,indice;
-        for(i=0;i<liste_à_trier.size();i++){
+        int taille=liste_à_trier.size();
+        for(i=0;i<taille;i++){
             indice= i-decrement;
             grille_successeur = liste_à_trier.get(indice).getGrille();
             for(j=0;j<liste_fermes.size();j++){
