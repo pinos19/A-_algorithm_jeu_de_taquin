@@ -20,14 +20,21 @@ public class Solveur {
 
         // grille3 == grille4
 
-        s.addNoeudListeFermes(new Noeud(grille1,null,0));
-        s.addNoeudListeFermes(new Noeud(grille2,null,0));
-        s.addNoeudListeFermes(new Noeud(grille3,null,0));
+        s.addNoeudListeOuverts(new Noeud(grille1,null,0));
+        s.addNoeudListeOuverts(new Noeud(grille2,null,0));
+        s.addNoeudListeOuverts(new Noeud(grille3,null,0));
         
         ArrayList<Noeud> liste_test = new ArrayList<Noeud>();
         liste_test.add(new Noeud(grille3,null,0));
         liste_test.add(new Noeud(grille5,null,0));
         liste_test.add(new Noeud(grille4,null,0));
+        System.out.println("Avant :\n");
+        System.out.println(s);
+        s.successeurDansListeOuverte(liste_test);
+        System.out.println("Après :\n");
+        System.out.println(s);
+
+        /*
         System.out.println("Avant :\n");
         for(int i=0;i<liste_test.size();i++){
             System.out.println(liste_test.get(i).getGrille());
@@ -36,7 +43,7 @@ public class Solveur {
         System.out.println("Après :\n");
         for(int i=0;i<liste_test.size();i++){
             System.out.println(liste_test.get(i).getGrille());
-        }
+        }*/
 
 
 
@@ -107,12 +114,13 @@ public class Solveur {
     public void addNoeudListeFermes(Noeud n){
         this.liste_noeuds_fermes.add(n);   
     }
-
-
-
-    public void test(ArrayList<Integer> liste){
-        liste.remove(0);
+    public int getSizeOuverts(){
+        return this.liste_noeuds_ouverts.size();
     }
+    public int getSizeFermes(){
+        return this.liste_noeuds_fermes.size();
+    }
+
 
     public static void triSuccesseurs(ArrayList<Noeud> liste_à_trier,ArrayList<Noeud> liste_fermes){
         Grille grille_successeur;
@@ -132,7 +140,7 @@ public class Solveur {
         }
 
     }
-    /*public void successeurDansListeOuverte(ArrayList<Noeud> liste_successeurs_triee, Solveur s){
+    public void successeurDansListeOuverte(ArrayList<Noeud> liste_successeurs_triee){
         Grille grille_temp_successeur;
         Noeud noeud_temp_successeur;
         Grille grille_temp_liste_noeuds_ouverts;
@@ -140,32 +148,32 @@ public class Solveur {
         Noeud noeud_liste_ouvert_à_tester;
         boolean is_dans_liste;
         int i,j,indice_liste_ouverts=0;
-        ArrayList<Noeud> liste_ouverts = s.getListeOuverts();
 
         for(i=0;i<liste_successeurs_triee.size();i++){
             noeud_temp_successeur=liste_successeurs_triee.get(i);
             grille_temp_successeur = noeud_temp_successeur.getGrille();
             is_dans_liste = false;
 
-            for(j=0;j<liste_ouverts.size();j++){
-                noeud_temp_liste_ouverts = liste_ouverts.get(j);
+            for(j=0;j<this.getSizeOuverts();j++){
+                noeud_temp_liste_ouverts = this.getNoeudListeOuverts(j);
                 grille_temp_liste_noeuds_ouverts = noeud_temp_liste_ouverts.getGrille();
+
                 if(grille_temp_successeur.equals(grille_temp_liste_noeuds_ouverts)){
                     indice_liste_ouverts = j;
                     is_dans_liste = true;
                 }
             }
             if(is_dans_liste){
-                noeud_liste_ouvert_à_tester =liste_ouverts.get(indice_liste_ouverts);
+                noeud_liste_ouvert_à_tester =this.getNoeudListeOuverts(indice_liste_ouverts);
                 if(noeud_temp_successeur.f() < noeud_liste_ouvert_à_tester.f()){
-                    liste_ouverts.remove(noeud_liste_ouvert_à_tester);
-                    liste_ouverts.add(noeud_temp_successeur);
+                    this.removeNoeudListeOuverts(indice_liste_ouverts);
+                    this.addNoeudListeOuverts(noeud_temp_successeur);
                 }
             }else{
-                liste_ouverts.add(noeud_temp_successeur);
+                this.addNoeudListeOuverts(noeud_temp_successeur);
             }
         }
-    }*/
+    }
 
     public Noeud chercheNoeudCourant(){
         int min, i, val_f_temp, indice_min=0;
