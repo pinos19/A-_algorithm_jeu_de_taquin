@@ -13,15 +13,30 @@ public class Solveur {
     public static void main(String[] args) throws IOException{
         Solveur s = new Solveur();
         Grille grille1 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle04.txt"); 
-        //Grille grille2 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle08.txt"); 
+        Grille grille2 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle08.txt"); 
         Grille grille3 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle07.txt"); 
-        
+        Grille grille4 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle07.txt");
+        Grille grille5 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle44.txt"); 
 
-        s.addNoeudListeOuverts(new Noeud(grille1,null,0));
-        //s.addNoeudListeOuverts(new Noeud(grille2,null,0));
-        s.addNoeudListeOuverts(new Noeud(grille3,null,0));
-        Noeud noeud_courant = s.chercheNoeudCourant();
-        System.out.println(noeud_courant.getGrille());
+        s.addNoeudListeFermes(new Noeud(grille1,null,0));
+        s.addNoeudListeFermes(new Noeud(grille2,null,0));
+        s.addNoeudListeFermes(new Noeud(grille3,null,0));
+        
+        ArrayList<Noeud> liste_test = new ArrayList<Noeud>();
+        liste_test.add(new Noeud(grille3,null,0));
+        liste_test.add(new Noeud(grille4,null,0));
+        liste_test.add(new Noeud(grille5,null,0));
+        for(int i=0;i<liste_test.size();i++){
+            System.out.println(liste_test.get(i).getGrille());
+        }
+        triSuccesseurs(liste_test,s.getListeFermes());
+        for(int i=0;i<liste_test.size();i++){
+            System.out.println(liste_test.get(i).getGrille());
+        }
+
+
+
+
         
 
 
@@ -95,25 +110,23 @@ public class Solveur {
         liste.remove(0);
     }
 
-    /*public void triSuccesseurs(ArrayList<Noeud> liste_successeurs_à_trier,Solveur s){
-        Grille grille_temp_successeur;
-        Grille grille_temp_liste_noeuds_fermes;
+    public static void triSuccesseurs(ArrayList<Noeud> liste_à_trier,ArrayList<Noeud> liste_fermes){
+        Grille grille_successeur;
+        Grille grille_fermes;
         int i,j,decrement=0,indice;
-        ArrayList<Noeud> liste_fermes = s.getListeFermes();
-
-        for(i=0;i<liste_successeurs_à_trier.size();i++){
+        for(i=0;i<liste_à_trier.size();i++){
             indice= i-decrement;
-            grille_temp_successeur = liste_successeurs_à_trier.get(indice).getGrille();
+            grille_successeur = liste_à_trier.get(indice).getGrille();
             for(j=0;j<liste_fermes.size();j++){
-                grille_temp_liste_noeuds_fermes = liste_fermes.get(j).getGrille();
-                if(grille_temp_successeur.equals(grille_temp_liste_noeuds_fermes)){
-                    liste_successeurs_à_trier.remove(indice);
+                grille_fermes = liste_fermes.get(j).getGrille();
+                if(grille_successeur.equals(grille_fermes)){
+                    liste_à_trier.remove(indice);
                     decrement++;
                 }
             }
         }
 
-    }*/
+    }
     /*public void successeurDansListeOuverte(ArrayList<Noeud> liste_successeurs_triee, Solveur s){
         Grille grille_temp_successeur;
         Noeud noeud_temp_successeur;
