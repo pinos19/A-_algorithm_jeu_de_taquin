@@ -1,26 +1,37 @@
 import java.util.ArrayList;
+
+
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
 public class Solveur {
-    private ArrayList<Noeud> liste_noeuds_ouverts = new ArrayList<Noeud>();
-    private ArrayList<Noeud> liste_noeuds_fermes = new ArrayList<Noeud>();
+    private ArrayList<Noeud> liste_noeuds_ouverts;
+    private ArrayList<Noeud> liste_noeuds_fermes;
 
     public static void main(String[] args) throws IOException{
         Solveur s = new Solveur();
-        Noeud but;
-        Grille grille = s.chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle04.txt"); 
-        System.out.println(grille);
-        but = s.algoStar(grille);
+        Grille grille1 = s.chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle04.txt"); 
+        Grille grille2 = s.chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle08.txt"); 
+        Grille grille3 = s.chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle42.txt"); 
 
-        System.out.println(but.getGrille());
+        s.addNoeudListeOuverts(new Noeud(grille1,null,0));
+        s.addNoeudListeOuverts(new Noeud(grille2,null,0));
+        s.addNoeudListeOuverts(new Noeud(grille3,null,0));
+
+        System.out.println(s);
+        
 
 
 
     }
-    public Noeud algoStar(Grille initial){
+    public Solveur(){
+        this.liste_noeuds_fermes = new ArrayList<Noeud>();
+        this.liste_noeuds_ouverts = new ArrayList<Noeud>();
+    }
+
+    /*public Noeud algoStar(Grille initial){
         ArrayList<Noeud> liste_successeurs;
         Noeud noeud_racine = new Noeud(initial,null,0);
         Noeud noeudCourant;
@@ -43,20 +54,47 @@ public class Solveur {
         return noeudCourant;
 
 
+    }*/
+    public static int puissanceDix(int indice){
+        int sortie=1;
+        for(int i=0;i<indice;i++){
+            sortie = sortie * 10;
+        }
+        return sortie;
     }
+
     public ArrayList<Noeud> getListeFermes(){
         return this.liste_noeuds_fermes;
     }
     public ArrayList<Noeud> getListeOuverts(){
         return this.liste_noeuds_ouverts;
     }
+    public Noeud getNoeudListeOuverts(int indice){
+        return this.liste_noeuds_ouverts.get(indice);
+    }
+    public Noeud getNoeudListeFermes(int indice){
+        return this.liste_noeuds_fermes.get(indice);
+    }
+    public void removeNoeudListeFermes(int indice){
+        this.liste_noeuds_fermes.remove(indice);
+    }
+    public void removeNoeudListeOuverts(int indice){
+        this.liste_noeuds_ouverts.remove(indice);
+    }
+    public void addNoeudListeOuverts(Noeud n){
+        this.liste_noeuds_ouverts.add(n);   
+    }
+    public void addNoeudListeFermes(Noeud n){
+        this.liste_noeuds_fermes.add(n);   
+    }
+
 
 
     public void test(ArrayList<Integer> liste){
         liste.remove(0);
     }
 
-    public void triSuccesseurs(ArrayList<Noeud> liste_successeurs_à_trier,Solveur s){
+    /*public void triSuccesseurs(ArrayList<Noeud> liste_successeurs_à_trier,Solveur s){
         Grille grille_temp_successeur;
         Grille grille_temp_liste_noeuds_fermes;
         int i,j,decrement=0,indice;
@@ -74,8 +112,8 @@ public class Solveur {
             }
         }
 
-    }
-    public void successeurDansListeOuverte(ArrayList<Noeud> liste_successeurs_triee, Solveur s){
+    }*/
+    /*public void successeurDansListeOuverte(ArrayList<Noeud> liste_successeurs_triee, Solveur s){
         Grille grille_temp_successeur;
         Noeud noeud_temp_successeur;
         Grille grille_temp_liste_noeuds_ouverts;
@@ -108,9 +146,9 @@ public class Solveur {
                 liste_ouverts.add(noeud_temp_successeur);
             }
         }
-    }
+    }*/
 
-    public Noeud chercheNoeudCourant(){
+    /*public Noeud chercheNoeudCourant(){
         int min, i, val_f_temp, indice_min=0;
         min = this.liste_noeuds_ouverts.get(0).f();
 
@@ -122,7 +160,7 @@ public class Solveur {
             }
         }
         return this.liste_noeuds_ouverts.get(indice_min);
-    }
+    }*/
 
     public Grille chargerFichier(String nomFichier) throws IOException{
         BufferedReader in = null;
@@ -133,9 +171,11 @@ public class Solveur {
 	        System.out.println("Erreur d'ouverture");
         }
 		String line;
-        int taille;
-        int compteur=0;
         int grille_tableau[][];
+        int taille;
+        int l=0,c=0,j,i;
+        int res_int =0;
+        String res_string="";
 
         line = in.readLine();
         taille =(int)line.charAt(0)-48;
@@ -143,14 +183,42 @@ public class Solveur {
 
 		while ((line = in.readLine()) != null)
 		{
-            grille_tableau[compteur][0]=(int)line.charAt(0)-48;
-            grille_tableau[compteur][1]=(int)line.charAt(2)-48;
-            grille_tableau[compteur][2]=(int)line.charAt(4)-48;
-            compteur++;
+            c=0;
+            for(j=0;j<line.length();j++){
+                if(line.charAt(j)!=' '){
+                    res_string = res_string+line.charAt(j);
+                }
+                if((line.charAt(j)==' ' || j==line.length()-1) && res_string!=""){
+                    for(i=0;i<res_string.length();i++){
+                        res_int = res_int + ((int)res_string.charAt(i)-48)*puissanceDix(res_string.length()-1-i);
+                    }
+                    grille_tableau[l][c] = res_int;
+                    c++;
+                    res_int=0;
+                    res_string="";
+                } 
+            }
+            l++;
 		}
 		in.close();
         return new Grille(grille_tableau);
-        
+    
+    }
+    public String toString(){
+        String sortie="";
+        Noeud noeud_temp;
+        int i;
+        sortie=sortie+"Liste ouverte\n";
+        for(i=0;i<this.liste_noeuds_ouverts.size();i++){
+            noeud_temp = this.liste_noeuds_ouverts.get(i);
+            sortie = sortie +noeud_temp.getGrille().toString()+"\n";
+        }
+        sortie=sortie+"Liste fermée\n";
+        for(i=0;i<this.liste_noeuds_fermes.size();i++){
+            noeud_temp = this.liste_noeuds_fermes.get(i);
+            sortie = sortie +noeud_temp.getGrille().toString()+"\n";
+        }
+        return sortie;
     }
     
 }
