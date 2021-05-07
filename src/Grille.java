@@ -38,8 +38,8 @@ public class Grille {
     }
     public int[][] copier(){
         int[][] copie_grille = new int[this.taille][this.taille];
-        for(int i=0;i<3;i++){
-            for(int j=0;j<3;j++){
+        for(int i=0;i<this.taille;i++){
+            for(int j=0;j<this.taille;j++){
                 copie_grille[i][j]=this.grille[i][j];
             }
         }

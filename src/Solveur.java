@@ -12,15 +12,35 @@ public class Solveur {
 
     public static void main(String[] args) throws IOException{
         Solveur s = new Solveur();
-        Grille grille1 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle04.txt"); 
-        Grille grille2 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle08.txt"); 
+        Noeud but;
+        Grille grille1 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle2x2-unsolvable2.txt"); 
+        /*Grille grille2 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle08.txt"); 
         Grille grille3 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle07.txt"); 
         Grille grille4 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle07.txt");
-        Grille grille5 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle44.txt"); 
+        Grille grille5 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle44.txt"); */
+        System.out.println(grille1);
+        but = s.algoStar(grille1);
+        if(but==null){
+            System.out.println("Il n'y a pas de solution");
+        }else{
+            System.out.println(but.getGrille());
+        }
+        /*
+        ArrayList<Integer> liste = new ArrayList<Integer>();
+        liste.add(1);
+        liste.add(2);
+        liste.add(3);
+
+        liste.remove(1);
+        liste.add(1,6);
+
+        System.out.println(liste);
+
+        */
 
         // grille3 == grille4
 
-        s.addNoeudListeOuverts(new Noeud(grille1,null,0));
+        /*s.addNoeudListeOuverts(new Noeud(grille1,null,0));
         s.addNoeudListeOuverts(new Noeud(grille2,null,0));
         s.addNoeudListeOuverts(new Noeud(grille3,null,0));
         
@@ -32,7 +52,7 @@ public class Solveur {
         System.out.println(s);
         s.successeurDansListeOuverte(liste_test);
         System.out.println("Après :\n");
-        System.out.println(s);
+        System.out.println(s);*/
 
         /*
         System.out.println("Avant :\n");
@@ -58,30 +78,29 @@ public class Solveur {
         this.liste_noeuds_ouverts = new ArrayList<Noeud>();
     }
 
-    /*public Noeud algoStar(Grille initial){
+    public Noeud algoStar(Grille initial){
         ArrayList<Noeud> liste_successeurs;
         Noeud noeud_racine = new Noeud(initial,null,0);
         Noeud noeudCourant;
-        Solveur s = new Solveur();
-        this.liste_noeuds_ouverts.add(noeud_racine);
 
+        this.addNoeudListeOuverts(noeud_racine);
         do{
-            noeudCourant = s.chercheNoeudCourant();
-            this.liste_noeuds_fermes.add(noeudCourant);
-            this.liste_noeuds_ouverts.remove(noeudCourant);
+            noeudCourant = this.chercheNoeudCourant();
+            this.addNoeudListeFermes(noeudCourant);
+            this.removeNoeudListeOuverts(noeudCourant);
             liste_successeurs = noeudCourant.successeurs();
+            triSuccesseurs(liste_successeurs,this.getListeFermes());
+            this.successeurDansListeOuverte(liste_successeurs);
+            if(this.getSizeOuverts()==0){
+                noeudCourant=null;
+            }
 
-
-            s.triSuccesseurs(liste_successeurs,s);
-            s.successeurDansListeOuverte(liste_successeurs,s);
-
-
-        }while(!noeudCourant.estUnEtatFinal() || this.liste_noeuds_ouverts.size()!=0);
+        }while(this.getSizeOuverts()!=0 && !noeudCourant.estUnEtatFinal());
 
         return noeudCourant;
 
 
-    }*/
+    }
     public static int puissanceDix(int indice){
         int sortie=1;
         for(int i=0;i<indice;i++){
@@ -102,23 +121,46 @@ public class Solveur {
     public Noeud getNoeudListeFermes(int indice){
         return this.liste_noeuds_fermes.get(indice);
     }
+
     public void removeNoeudListeFermes(int indice){
         this.liste_noeuds_fermes.remove(indice);
     }
     public void removeNoeudListeOuverts(int indice){
         this.liste_noeuds_ouverts.remove(indice);
     }
+    public void removeNoeudListeFermes(Noeud n){
+        this.liste_noeuds_fermes.remove(n);
+    }
+    public void removeNoeudListeOuverts(Noeud n){
+        this.liste_noeuds_ouverts.remove(n);
+    }
+
     public void addNoeudListeOuverts(Noeud n){
         this.liste_noeuds_ouverts.add(n);   
+    }
+    public void addNoeudListeOuverts(int indice,Noeud n){
+        this.liste_noeuds_ouverts.add(indice,n);   
     }
     public void addNoeudListeFermes(Noeud n){
         this.liste_noeuds_fermes.add(n);   
     }
     public int getSizeOuverts(){
-        return this.liste_noeuds_ouverts.size();
+        int sortie;
+        if(this.liste_noeuds_ouverts ==null){
+            sortie = 0;
+        }else{
+            sortie = this.liste_noeuds_ouverts.size();
+        }
+        return sortie;
     }
     public int getSizeFermes(){
-        return this.liste_noeuds_fermes.size();
+        int sortie;
+        if(this.liste_noeuds_fermes ==null){
+            sortie = 0;
+        }else{
+            sortie = this.liste_noeuds_fermes.size();
+        }
+        return sortie;
     }
 
 
@@ -167,8 +209,9 @@ public class Solveur {
                 noeud_liste_ouvert_à_tester =this.getNoeudListeOuverts(indice_liste_ouverts);
                 if(noeud_temp_successeur.f() < noeud_liste_ouvert_à_tester.f()){
                     this.removeNoeudListeOuverts(indice_liste_ouverts);
-                    this.addNoeudListeOuverts(noeud_temp_successeur);
+                    this.addNoeudListeOuverts(indice_liste_ouverts,noeud_temp_successeur);
                 }
+                is_dans_liste=false;
             }else{
                 this.addNoeudListeOuverts(noeud_temp_successeur);
             }
@@ -177,16 +220,21 @@ public class Solveur {
 
     public Noeud chercheNoeudCourant(){
         int min, i, val_f_temp, indice_min=0;
-        min = this.liste_noeuds_ouverts.get(0).f();
-
-        for(i=1;i<this.liste_noeuds_ouverts.size();i++){
-            val_f_temp = this.liste_noeuds_ouverts.get(i).f();
-            if(val_f_temp < min){
-                min = val_f_temp;
-                indice_min = i;
+        Noeud noeud_sortie;
+        if(this.getSizeOuverts()!=0){
+            min = this.liste_noeuds_ouverts.get(0).f();
+            for(i=1;i<this.liste_noeuds_ouverts.size();i++){
+                val_f_temp = this.liste_noeuds_ouverts.get(i).f();
+                if(val_f_temp < min){
+                    min = val_f_temp;
+                    indice_min = i;
+                }
             }
+            noeud_sortie = this.getNoeudListeOuverts(indice_min);
+        }else{
+            noeud_sortie=null;
         }
-        return this.liste_noeuds_ouverts.get(indice_min);
+        return noeud_sortie;
     }
 
     public static Grille chargerFichier(String nomFichier) throws IOException{
