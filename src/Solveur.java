@@ -12,15 +12,16 @@ public class Solveur {
 
     public static void main(String[] args) throws IOException{
         Solveur s = new Solveur();
-        Grille grille1 = s.chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle04.txt"); 
-        Grille grille2 = s.chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle08.txt"); 
-        Grille grille3 = s.chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle42.txt"); 
+        Grille grille1 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle04.txt"); 
+        //Grille grille2 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle08.txt"); 
+        Grille grille3 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle07.txt"); 
+        
 
         s.addNoeudListeOuverts(new Noeud(grille1,null,0));
-        s.addNoeudListeOuverts(new Noeud(grille2,null,0));
+        //s.addNoeudListeOuverts(new Noeud(grille2,null,0));
         s.addNoeudListeOuverts(new Noeud(grille3,null,0));
-
-        System.out.println(s);
+        Noeud noeud_courant = s.chercheNoeudCourant();
+        System.out.println(noeud_courant.getGrille());
         
 
 
@@ -148,7 +149,7 @@ public class Solveur {
         }
     }*/
 
-    /*public Noeud chercheNoeudCourant(){
+    public Noeud chercheNoeudCourant(){
         int min, i, val_f_temp, indice_min=0;
         min = this.liste_noeuds_ouverts.get(0).f();
 
@@ -160,9 +161,9 @@ public class Solveur {
             }
         }
         return this.liste_noeuds_ouverts.get(indice_min);
-    }*/
+    }
 
-    public Grille chargerFichier(String nomFichier) throws IOException{
+    public static Grille chargerFichier(String nomFichier) throws IOException{
         BufferedReader in = null;
         try{
 	        in = new BufferedReader(new FileReader(nomFichier));
