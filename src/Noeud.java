@@ -18,7 +18,7 @@ public class Noeud {
     public Noeud getPere(){
         return this.pere;
     }
-    public int h(){
+    public int h(){ //Première fonction heuristique h1
         int taille = this.grille.getTaille();
         int valeur_exacte=1;
         int sortie=0;

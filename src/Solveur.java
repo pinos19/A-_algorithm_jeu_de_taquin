@@ -13,65 +13,31 @@ public class Solveur {
     public static void main(String[] args) throws IOException{
         Solveur s = new Solveur();
         Noeud but;
-        Grille grille1 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle2x2-unsolvable2.txt"); 
-        /*Grille grille2 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle08.txt"); 
-        Grille grille3 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle07.txt"); 
-        Grille grille4 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle07.txt");
-        Grille grille5 = chargerFichier("C:/Users/PC/Desktop/IA/tp2/algorithme-A-star/src/puzzles/puzzle44.txt"); */
-        System.out.println(grille1);
-        but = s.algoStar(grille1);
-        if(but==null){
-            System.out.println("Il n'y a pas de solution");
-        }else{
-            System.out.println(but.getGrille());
-        }
-        /*
-        ArrayList<Integer> liste = new ArrayList<Integer>();
-        liste.add(1);
-        liste.add(2);
-        liste.add(3);
+        ArrayList<Grille> grille_liste_tests = new ArrayList<Grille>();
 
-        liste.remove(1);
-        liste.add(1,6);
-
-        System.out.println(liste);
-
-        */
-
-        // grille3 == grille4
-
-        /*s.addNoeudListeOuverts(new Noeud(grille1,null,0));
-        s.addNoeudListeOuverts(new Noeud(grille2,null,0));
-        s.addNoeudListeOuverts(new Noeud(grille3,null,0));
-        
-        ArrayList<Noeud> liste_test = new ArrayList<Noeud>();
-        liste_test.add(new Noeud(grille3,null,0));
-        liste_test.add(new Noeud(grille5,null,0));
-        liste_test.add(new Noeud(grille4,null,0));
-        System.out.println("Avant :\n");
-        System.out.println(s);
-        s.successeurDansListeOuverte(liste_test);
-        System.out.println("Après :\n");
-        System.out.println(s);*/
-
-        /*
-        System.out.println("Avant :\n");
-        for(int i=0;i<liste_test.size();i++){
-            System.out.println(liste_test.get(i).getGrille());
-        }
-        triSuccesseurs(liste_test,s.getListeFermes());
-        System.out.println("Après :\n");
-        for(int i=0;i<liste_test.size();i++){
-            System.out.println(liste_test.get(i).getGrille());
-        }*/
-
-
-
-
+        Grille grille1 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle2x2-unsolvable2.txt"); 
+        Grille grille2 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle50.txt"); 
+        Grille grille3 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle45.txt"); 
+        Grille grille4 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle07.txt");
+        Grille grille5 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle00.txt"); 
         
 
+        grille_liste_tests.add(grille1);
+        grille_liste_tests.add(grille2);
+        grille_liste_tests.add(grille3);
+        grille_liste_tests.add(grille4);
+        grille_liste_tests.add(grille5);
+        
 
-
+        for(int i=0;i<grille_liste_tests.size();i++){
+            System.out.println(grille_liste_tests.get(i));
+            but = s.algoStar(grille_liste_tests.get(i));
+            if(but==null){
+                System.out.println("Il n'y a pas de solution");
+            }else{
+                System.out.println(but.getGrille());
+            }
+        }
     }
     public Solveur(){
         this.liste_noeuds_fermes = new ArrayList<Noeud>();
@@ -247,13 +213,12 @@ public class Solveur {
         }
 		String line;
         int grille_tableau[][];
-        int taille;
         int l=0,c=0,j,i;
         int res_int =0;
         String res_string="";
 
         line = in.readLine();
-        taille =(int)line.charAt(0)-48;
+        Integer taille=Integer.valueOf(line);  
         grille_tableau = new int[taille][taille];
 
 		while ((line = in.readLine()) != null)
