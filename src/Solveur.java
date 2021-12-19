@@ -15,14 +15,14 @@ public class Solveur {
         Noeud but;
         ArrayList<Grille> grille_liste_tests = new ArrayList<Grille>();
 
-        Grille grille1 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle2x2-unsolvable2.txt"); 
-        Grille grille2 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle50.txt"); 
-        Grille grille3 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle45.txt"); 
-        Grille grille4 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle07.txt");
+        //Grille grille1 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle2x2-unsolvable2.txt"); 
+        Grille grille2 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle20.txt"); 
+        Grille grille3 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle15.txt"); 
+        Grille grille4 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle09.txt");
         Grille grille5 = chargerFichier("D:/Bureau/anneeScolaire2020-2021/IA/tp2/algorithme-A-star/src/puzzles/puzzle00.txt"); 
         
 
-        grille_liste_tests.add(grille1);
+        //grille_liste_tests.add(grille1);
         grille_liste_tests.add(grille2);
         grille_liste_tests.add(grille3);
         grille_liste_tests.add(grille4);
@@ -30,11 +30,13 @@ public class Solveur {
         
 
         for(int i=0;i<grille_liste_tests.size();i++){
+            System.out.println("Grille avant l'algorithme A Star");
             System.out.println(grille_liste_tests.get(i));
             but = s.algoStar(grille_liste_tests.get(i));
             if(but==null){
                 System.out.println("Il n'y a pas de solution");
             }else{
+                System.out.println("Grille Résolue");
                 System.out.println(but.getGrille());
             }
         }
